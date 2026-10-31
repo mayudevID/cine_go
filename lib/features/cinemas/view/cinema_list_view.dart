@@ -91,6 +91,7 @@ class _CinemaFinderContentState extends State<_CinemaFinderContent> {
   bool _initialCameraPositioned = false;
   CircleAnnotationManager? _markerManager;
   PolylineAnnotationManager? _routeManager;
+  ScrollController? _cinemaListScrollController;
   final Map<String, CinemaModel> _cinemaByMarker = {};
 
   double get _defaultSheetHeight {
@@ -120,6 +121,14 @@ class _CinemaFinderContentState extends State<_CinemaFinderContent> {
         : Future<void>.value();
     widget.onCinemaSelected(cinema);
     await sheetReset;
+    final listScrollController = _cinemaListScrollController;
+    if (listScrollController?.hasClients ?? false) {
+      await listScrollController!.animateTo(
+        0,
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeOutCubic,
+      );
+    }
     await _focusCinema(cinema);
   }
 
@@ -238,7 +247,9 @@ class _CinemaFinderContentState extends State<_CinemaFinderContent> {
       widget.cinemas
           .map((c) => Point(coordinates: Position(c.longitude, c.latitude)))
           .toList(growable: false),
-      CameraOptions(),
+      CameraOptions(
+        padding: MbxEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
+      ),
       MbxEdgeInsets(
         top: 36,
         left: 36,
@@ -290,7 +301,9 @@ class _CinemaFinderContentState extends State<_CinemaFinderContent> {
       // widget.cinemas
       //     .map((c) => Point(coordinates: Position(c.longitude, c.latitude)))
       //     .toList(growable: false),
-      CameraOptions(),
+      CameraOptions(
+        padding: MbxEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
+      ),
       MbxEdgeInsets(
         top: 36,
         left: 36,
@@ -301,7 +314,7 @@ class _CinemaFinderContentState extends State<_CinemaFinderContent> {
       null,
     );
 
-    await Future.delayed(Duration(milliseconds: 100));
+    await Future.delayed(Duration(milliseconds: 500));
     await map.flyTo(camera, MapAnimationOptions(duration: 700));
   }
 
@@ -333,73 +346,76 @@ class _CinemaFinderContentState extends State<_CinemaFinderContent> {
           initialChildSize: _initialSheetExtent,
           minChildSize: 0.24,
           maxChildSize: 0.88,
-          builder: (context, scrollController) => Container(
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(24),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.24),
-                  blurRadius: 18,
-                  offset: const Offset(0, -5),
+          builder: (context, scrollController) {
+            _cinemaListScrollController = scrollController;
+            return Container(
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(24),
                 ),
-              ],
-            ),
-            child: ListView(
-              controller: scrollController,
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 28),
-              children: [
-                Center(
-                  child: Container(
-                    width: 38,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: Colors.white30,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.24),
+                    blurRadius: 18,
+                    offset: const Offset(0, -5),
                   ),
-                ),
-                const SizedBox(height: 18),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Bioskop di Jakarta',
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(fontWeight: FontWeight.w700),
+                ],
+              ),
+              child: ListView(
+                controller: scrollController,
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 28),
+                children: [
+                  Center(
+                    child: Container(
+                      width: 38,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: Colors.white30,
+                        borderRadius: BorderRadius.circular(4),
                       ),
                     ),
-                    Text(
-                      '${widget.cinemas.length} lokasi',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(color: Colors.white54),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 14),
-                _SelectedCinemaCard(
-                  cinema: selectedCinema,
-                  routeStatus: widget.routeStatus,
-                  route: widget.route,
-                  routeError: widget.routeError,
-                ),
-                const SizedBox(height: 12),
-                for (final cinema in widget.cinemas) ...[
-                  _CinemaRow(
-                    cinema: cinema,
-                    isSelected: cinema.id == selectedCinema?.id,
-                    onTap: () => unawaited(_selectCinema(cinema)),
                   ),
-                  if (cinema != widget.cinemas.last) const Divider(height: 1),
+                  const SizedBox(height: 18),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Bioskop di Jakarta',
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      Text(
+                        '${widget.cinemas.length} lokasi',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodySmall?.copyWith(color: Colors.white54),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 14),
+                  _SelectedCinemaCard(
+                    cinema: selectedCinema,
+                    routeStatus: widget.routeStatus,
+                    route: widget.route,
+                    routeError: widget.routeError,
+                  ),
+                  const SizedBox(height: 12),
+                  for (final cinema in widget.cinemas) ...[
+                    _CinemaRow(
+                      cinema: cinema,
+                      isSelected: cinema.id == selectedCinema?.id,
+                      onTap: () => unawaited(_selectCinema(cinema)),
+                    ),
+                    if (cinema != widget.cinemas.last) const Divider(height: 1),
+                  ],
+                  const SizedBox(height: 12),
                 ],
-                const SizedBox(height: 12),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ],
     );
@@ -455,11 +471,22 @@ class _SelectedCinemaCard extends StatelessWidget {
     if (routeStatus != CinemaRouteStatus.success || route == null) {
       return 'Pilih bioskop untuk melihat estimasi perjalanan dari lokasi Anda';
     }
-    final minutes = (route!.eta.inSeconds / 60).ceil();
     final distance = route!.distanceMeters >= 1000
         ? '${(route!.distanceMeters / 1000).toStringAsFixed(1)} km'
         : '${route!.distanceMeters.round()} m';
-    return '$minutes menit · $distance berkendara';
+    return '${_formatDuration(route!.eta)} · $distance berkendara';
+  }
+
+  String _formatDuration(Duration duration) {
+    final hours = duration.inHours;
+    final minutes = duration.inMinutes.remainder(60);
+    final seconds = duration.inSeconds.remainder(60);
+    final parts = <String>[
+      if (hours > 0) '$hours jam',
+      if (minutes > 0) '$minutes menit',
+      if (seconds > 0) '$seconds detik',
+    ];
+    return parts.isEmpty ? '0 detik' : parts.join(' ');
   }
 
   @override

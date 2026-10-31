@@ -5,30 +5,30 @@ PODS:
   - geolocator_apple (1.2.0):
     - Flutter
     - FlutterMacOS
-  - mapbox_maps_flutter (2.31.1):
+  - mapbox_maps_flutter_mobile (3.34.1):
     - Flutter
-    - MapboxMaps (= 11.31.1)
-    - Turf (= 4.0.0)
-  - MapboxCommon (24.31.1):
-    - Turf (= 4.0.0)
-  - MapboxCoreMaps (11.31.1):
-    - MapboxCommon (= 24.31.1)
-  - MapboxMaps (11.31.1):
-    - MapboxCommon (= 24.31.1)
-    - MapboxCoreMaps (= 11.31.1)
-    - Turf (= 4.0.0)
+    - MapboxMaps (= 11.34.1)
+    - Turf (= 4.1.0)
+  - MapboxCommon (24.34.1):
+    - Turf (= 4.1.0)
+  - MapboxCoreMaps (11.34.1):
+    - MapboxCommon (= 24.34.1)
+  - MapboxMaps (11.34.1):
+    - MapboxCommon (= 24.34.1)
+    - MapboxCoreMaps (= 11.34.1)
+    - Turf (= 4.1.0)
   - package_info_plus (0.4.5):
     - Flutter
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - Turf (4.0.0)
+  - Turf (4.1.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/darwin`)
-  - mapbox_maps_flutter (from `.symlinks/plugins/mapbox_maps_flutter/ios`)
+  - mapbox_maps_flutter_mobile (from `.symlinks/plugins/mapbox_maps_flutter_mobile/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
 
@@ -46,8 +46,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   geolocator_apple:
     :path: ".symlinks/plugins/geolocator_apple/darwin"
-  mapbox_maps_flutter:
-    :path: ".symlinks/plugins/mapbox_maps_flutter/ios"
+  mapbox_maps_flutter_mobile:
+    :path: ".symlinks/plugins/mapbox_maps_flutter_mobile/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   shared_preferences_foundation:
@@ -57,13 +57,13 @@ SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   flutter_local_notifications: a5a732f069baa862e728d839dd2ebb904737effb
   geolocator_apple: ab36aa0e8b7d7a2d7639b3b4e48308394e8cef5e
-  mapbox_maps_flutter: 2a9ec0e32dccc240f56828173337081f15bd4fcc
-  MapboxCommon: bf4fec62d93ed72329f9054c0aa14964caf977d6
-  MapboxCoreMaps: 8bb0e10fc178e61d6cfe7e9f64b9e59fd6f30833
-  MapboxMaps: 64e1840211bd9b0379d34a6748c4e4312284e74b
+  mapbox_maps_flutter_mobile: 437103585c1c735ed9104552a691caa251bc6259
+  MapboxCommon: 1f2a3f48bbbc286a343b0a7fb54b5216bacd936e
+  MapboxCoreMaps: f9ced5362da47da6444b6d05b3e1a32ab12f8f1e
+  MapboxMaps: c428d2369289b7c2ae575d52a1c3e05e2e1af036
   package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
   shared_preferences_foundation: 7036424c3d8ec98dfe75ff1667cb0cd531ec82bb
-  Turf: c9eb11a65d96af58cac523460fd40fec5061b081
+  Turf: e2e8eacde1212cec3ebed24faf722d9662532373
 
 PODFILE CHECKSUM: 7df1894ca1ca06c541c2f6e8f56fa901fa106944
 
