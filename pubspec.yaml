@@ -1,0 +1,37 @@
+name: cine_go
+description: "CineGo adalah aplikasi Flutter untuk menjelajahi film Star Wars dari SWAPI dan mencari bioskop terdekat."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.11.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  dio: ^5.11.1
+  event_bus: ^2.0.1
+  equatable: ^2.0.7
+  flutter_bloc: ^9.1.1
+  get_it: ^9.3.0
+  go_router: ^16.3.0
+  geolocator: ^14.1.2
+  flutter_dotenv: ^6.0.1
+  mapbox_maps_flutter: ^3.34.1
+  shared_preferences: ^2.5.6
+  flutter_local_notifications: ^19.4.2
+  google_fonts: ^8.2.1
+  shimmer: ^3.0.0
+  timezone: ^0.10.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - .env
