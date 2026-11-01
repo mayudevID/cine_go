@@ -9,8 +9,3 @@ class ReminderDeletedEvent implements AppEvent {
   const ReminderDeletedEvent(this.reminderId);
   final String reminderId;
 }
-
-class CinemaSelectedEvent implements AppEvent {
-  const CinemaSelectedEvent(this.cinemaId);
-  final String cinemaId;
-}
